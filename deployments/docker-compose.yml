@@ -1,0 +1,11 @@
+version: "3"
+services:
+  app:
+    container_name: rest-api-image-uploader
+    build:
+      context: ../
+      dockerfile: deployments/app/Dockerfile
+    volumes:
+      - ./../app:/app
+    ports:
+      - "5000:5000"
