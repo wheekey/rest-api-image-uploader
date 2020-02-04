@@ -19,6 +19,6 @@ docker exec rest-api-image-uploader sh -c "python -m unittest discover"
 
 ### Gracefull shutdown
 ```
-
+curl http://0.0.0.0:5000/shutdown
 ```
 
