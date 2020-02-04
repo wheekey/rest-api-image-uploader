@@ -1,6 +1,6 @@
 # coding: utf-8
 import unittest
-from app import app
+import app
 import simplejson as json
 from io import BytesIO, StringIO
 
@@ -8,7 +8,7 @@ from io import BytesIO, StringIO
 class AppTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.client = app.test_client()
+        self.client = app.app.test_client()
 
     def test_upload(self):
         """ Test API can upload an image (POST request) """
