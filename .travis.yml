@@ -3,4 +3,4 @@ python:
   - "3.6"
 install:
   - pip install -r app/requirements.txt
-script: build.sh
+script: bash build.sh
