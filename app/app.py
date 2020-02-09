@@ -11,13 +11,11 @@ import uuid
 from io import BytesIO
 from PIL import Image
 from mimetypes import guess_extension, guess_type
-
-UPLOAD_FOLDER = 'images'
-THUMBS_FOLDER = 'images/thumbs'
+import settings.settings as settings
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['THUMBS_FOLDER'] = THUMBS_FOLDER
+app.config['UPLOAD_FOLDER'] = settings.UPLOAD_DIR
+app.config['THUMBS_FOLDER'] = settings.THUMBS_DIR
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -46,7 +44,7 @@ def validate_filename(filename, content_type: str) -> int:
     if request.content_type == 'application/json':
         if is_base64(filename):
             return 201
-        if is_valid_url(filename) and allowed_file(filename):
+        if is_valid_url(filename):
             return 201
         else:
             return 400

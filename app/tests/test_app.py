@@ -1,19 +1,18 @@
 # coding: utf-8
 import unittest
-import app
+import settings.settings as settings
 import simplejson as json
-from io import BytesIO, StringIO
-
+import app as rest_api
 
 class AppTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.client = app.app.test_client()
+        self.client = rest_api.app.test_client()
 
     def test_upload(self):
         """ Test API can upload an image (POST request) """
 
-        img1 = open('static/img1.jpg', 'rb')
+        img1 = open(settings.TEST_IMGS_DIR + '/img1.jpg', 'rb')
 
         data = {
             'file': img1
@@ -25,8 +24,8 @@ class AppTestCase(unittest.TestCase):
     def test_multiple_upload(self):
         """ Test API can upload multiple files (POST request) """
 
-        img1 = open('static/img1.jpg', 'rb')
-        img2 = open('static/img2.jpg', 'rb')
+        img1 = open(settings.TEST_IMGS_DIR + '/img1.jpg', 'rb')
+        img2 = open(settings.TEST_IMGS_DIR + '/img2.jpg', 'rb')
 
         data = {
             'file': [img1, img2],
@@ -38,7 +37,7 @@ class AppTestCase(unittest.TestCase):
 
     def test_accept_multipart_requests(self):
         """ Test API can accept multipart/form-data requests (POST request) """
-        img1 = open('static/img1.jpg', 'rb')
+        img1 = open(settings.TEST_IMGS_DIR + '/img1.jpg', 'rb')
 
         data = {
             'file': img1
@@ -59,7 +58,8 @@ class AppTestCase(unittest.TestCase):
     def test_upload_file_given_url(self):
         """ Test API can upload images at a given URL (image posted somewhere on the Internet). """
         data = json.dumps(
-            ['https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg'])
+            ['https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg',
+             'https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg'])
 
         rv = self.client.post('/upload', data=data, content_type='application/json')
         assert rv.status_code == 201
