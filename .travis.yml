@@ -3,5 +3,4 @@ python:
   - "3.6"
 install:
   - pip install -r app/requirements.txt
-script:
-  - cd app | python -m unittest discover
+script: build.sh
